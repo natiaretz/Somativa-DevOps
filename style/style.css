@@ -15,6 +15,7 @@ body {
   justify-content: center;
   font-family: 'Nunito', sans-serif;
   background: linear-gradient(135deg, #ffe0f3, #ecdeff);
+  cursor: url('../img/cursor-48.png') 0 0, auto;
 }
 
 /* =========================
@@ -155,6 +156,7 @@ h2 {
 
 .game-screen h2 {
   color: #f084c5;
+
   
 }
 
@@ -178,6 +180,7 @@ h2 {
 canvas {
   display: block;
   max-width: 100%;
+  cursor: crosshair;
 }
 
 /* Etiqueta "Imagem 1" e "Imagem 2" */
