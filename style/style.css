@@ -1,0 +1,233 @@
+/* =========================
+   Configuracoes gerais
+   ========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, #ffe0f3, #ecdeff);
+}
+
+/* =========================
+   Telas do jogo
+   ========================= */
+
+.screen {
+  display: none;
+  width: 100%;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.screen.on {
+  display: flex;
+}
+
+/* =========================
+   Titulos e textos
+   ========================= */
+
+h1,
+h2 {
+  font-family: 'Pacifico';
+  color: #e0428f;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  text-shadow: 3px 3px 0 #d8ccff;
+}
+
+h2 {
+  font-size: clamp(16px, 2.5vw, 22px);
+}
+
+/* =========================
+   Cartoes e botoes
+   ========================= */
+
+.card {
+  width: 90%;
+  max-width: 460px;
+  padding: 40px 50px;
+  text-align: center;
+  background: #fff9fc;
+  border: 3px solid #ffaad4;
+  border-radius: 28px;
+  box-shadow: 0 8px 40px #f0b0d080;
+}
+
+.btn {
+  padding: 14px 48px;
+  font-family: 'Pacifico';
+  font-size: 20px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff79b8, #e0428f);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px #e0428f60;
+  transition: transform 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================
+   Tela inicial
+   ========================= */
+
+.previews {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.previews img {
+  width: 110px;
+  height: 145px;
+  object-fit: cover;
+  border: 3px solid #ffaad4;
+  border-radius: 14px;
+}
+
+/* =========================
+   Tela do jogo
+   ========================= */
+
+.images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wrap {
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+  border: 3px solid #ffaad4;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px #e0428f30;
+}
+
+/* Etiqueta "Imagem 1" e "Imagem 2" */
+.lbl {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #e0428f;
+  background: #fff9fccc;
+  border: 2px solid #ffaad4;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* Bolinhas que indicam os acertos */
+.dots {
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: 3px solid #ff79b8;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.dot.on {
+  background: #8effd4;
+  border-color: #2abf8a;
+  transform: scale(1.3);
+  box-shadow: 0 0 10px #2abf8a80;
+}
+
+/* =========================
+   Timer
+   ========================= */
+
+.timer-lbl {
+  font-size: 15px;
+  font-weight: 900;
+  color: #9b5c82;
+}
+
+.bar-bg {
+  width: min(700px, 92vw);
+  height: 20px;
+  overflow: hidden;
+  background: #ffd6ec;
+  border: 2.5px solid #ffaad4;
+  border-radius: 50px;
+}
+
+.bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff79b8, #b59cff);
+  border-radius: 50px;
+  transition: width 1s linear, background 0.5s;
+}
+
+.bar.red {
+  background: linear-gradient(90deg, #ff2255, #ff6688);
+}
+
+/* =========================
+   Tela de resultado
+   ========================= */
+
+.stars {
+  font-size: 32px;
+  letter-spacing: 4px;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 10px 0;
+}
+
+.stat {
+  min-width: 120px;
+  padding: 14px 22px;
+  background: #f3efff;
+  border: 2.5px solid #d8ccff;
+  border-radius: 16px;
+}
+
+.stat b {
+  display: block;
+  font-family: 'Pacifico';
+  font-size: 26px;
+  color: #8b66e8;
+}
+
+.stat span {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9b5c82;
+}
