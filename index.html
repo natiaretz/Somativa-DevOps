@@ -1,55 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo dos 5 Erros</title>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
-<!-- CSS -->
-<link rel="stylesheet" href="style/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo dos 5 Erros</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
- 
-<!-- TELA 1: INÍCIO -->
-<div class="screen on" id="s1">
-  <div class="card">
-    <div style="font-size:38px">🌸✨🌸</div>
-    <h1>Jogo dos<br>5 Erros</h1>
-    <p style="color:#9b5c82;font-weight:700;margin:6px 0 0">🔍 Encontre as 5 diferenças!</p>
-    <div class="previews">
-      <img src="img/Anime_Girl_1.jpg"><img src="img/Anime_Girl_2.jpg">
+  <!-- TELA 1: INICIO -->
+  <div class="screen start-screen on" id="s1">
+    <div class="start-frame">
+      <button class="start-btn" onclick="startGame()">jogar</button>
     </div>
-    <button class="btn" onclick="startGame()">▶ Jogar</button>
   </div>
-</div>
- 
-<!-- TELA 2: JOGO -->
-<div class="screen" id="s2">
-  <h2>✨ Encontre os 5 erros entre as imagens ✨</h2>
-  <div class="dots" id="dots"></div>
-  <div class="images">
-    <div class="wrap"><canvas id="c1"></canvas><div class="lbl">Imagem 1</div></div>
-    <div class="wrap"><canvas id="c2"></canvas><div class="lbl">Imagem 2</div></div>
-  </div>
-  <div class="timer-lbl">⏱️ <span id="tNum">1:00</span></div>
-  <div class="bar-bg"><div class="bar" id="bar"></div></div>
-</div>
- 
-<!-- TELA 3: RESULTADO -->
-<div class="screen" id="s3">
-  <div class="card">
-    <div id="rEmoji" style="font-size:54px"></div>
-    <h1 id="rTitle" style="font-size:clamp(24px,5vw,38px)"></h1>
-    <div class="stars" id="rStars"></div>
-    <div class="stats">
-      <div class="stat"><b id="rFound"></b><span>Erros encontrados</span></div>
-      <div class="stat"><b id="rTime"></b><span>Tempo restante</span></div>
-    </div>
-    <button class="btn" onclick="goStart()">🌸 Jogar Novamente</button>
-  </div>
-</div>
-<!-- JS -->
-<script src="js/javascript.js"></script>
-</body>
 
+  <!-- TELA 2: JOGO -->
+  <div class="screen game-screen" id="s2">
+    <h2>Encontre os 5 erros entre as imagens</h2>
+    <div class="dots" id="dots"></div>
+
+    <div class="images">
+      <div class="wrap">
+        <canvas id="c1"></canvas>
+        <div class="lbl">Imagem 1</div>
+      </div>
+
+      <div class="wrap">
+        <canvas id="c2"></canvas>
+        <div class="lbl">Imagem 2</div>
+      </div>
+    </div>
+
+    <div class="timer-lbl">Tempo: <span id="tNum">1:00</span></div>
+    <div class="bar-bg">
+      <div class="bar" id="bar"></div>
+    </div>
+  </div>
+
+  <!-- TELA 3: RESULTADO -->
+  <div class="screen result-screen" id="s3">
+    <div class="result-frame">
+      <div class="result-panel">
+        <h1 id="rTitle" class="result-title"></h1>
+        <div class="stars" id="rStars"></div>
+
+        <div class="stats">
+          <div class="stat">
+            <b id="rFound"></b>
+            <span>Erros encontrados</span>
+          </div>
+
+          <div class="stat">
+            <b id="rTime"></b>
+            <span>Tempo restante</span>
+          </div>
+        </div>
+
+        <button class="glass-btn result-btn" onclick="goStart()">Jogar Novamente</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/javascript.js"></script>
+</body>
 </html>
