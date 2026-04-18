@@ -144,6 +144,15 @@ h2 {
    Tela do jogo
    ========================= */
 
+.game-screen {
+  min-height: 100dvh;
+  overflow: hidden;
+  background-image: url('../img/tela-jogo.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .images {
   display: flex;
   justify-content: center;
