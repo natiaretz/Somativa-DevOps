@@ -68,12 +68,17 @@ function startGame() {
 
 // Ajusta o tamanho dos canvases e desenha as duas imagens.
 function drawImages() {
-  const maxW = Math.min(Math.floor((window.innerWidth - 40) / 2), 440);
-  const maxH = window.innerHeight - 220;
+  const sideBySide = window.innerWidth >= 760;
+  const maxW = sideBySide
+    ? Math.min(Math.floor((window.innerWidth - 56) / 2), 440)
+    : Math.min(window.innerWidth - 40, 360);
+  const maxH = sideBySide
+    ? window.innerHeight - 220
+    : Math.floor((window.innerHeight - 240) / 2);
   const w = img1.naturalWidth;
   const h = img1.naturalHeight;
 
-  scale = Math.min(maxW / w, maxH / h, 1);
+  scale = Math.min(maxW / w, Math.max(maxH, 180) / h, 1);
 
   [
     ['c1', img1],
@@ -186,10 +191,8 @@ function finishGame() {
 // Preenche a tela final com estrelas, mensagem, acertos e tempo restante.
 function showResult() {
   const stars = found === points.length && timeLeft >= 20 ? 5 : found === points.length ? 4 : found;
-  const titles = ['N\u00e3o foi dessa vez...', 'Continue tentando!', 'Bom esfor\u00e7o!', 'Muito bem!', '\u00d3timo!', 'Parab\u00e9ns!'];
-  const emojis = ['\u{1F622}', '\u{1F605}', '\u{1F642}', '\u{1F60A}', '\u{1F970}', '\u{1F389}'];
+  const titles = ['N\u00e3o foi dessa vez...', 'Continue tentando!', 'Bom esfor\u00e7o!', 'Muito bem!', '\u00d3timo!', 'Parabéns!'];
 
-  document.getElementById('rEmoji').textContent = emojis[stars];
   document.getElementById('rTitle').textContent = titles[stars];
   document.getElementById('rStars').textContent = '\u2b50'.repeat(stars) + '\u2606'.repeat(5 - stars);
   document.getElementById('rFound').textContent = found + '/5';

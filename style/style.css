@@ -9,7 +9,7 @@
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,6 +24,7 @@ body {
 .screen {
   display: none;
   width: 100%;
+  min-height: 100dvh;
   padding: 20px;
   flex-direction: column;
   align-items: center;
@@ -56,54 +57,87 @@ h2 {
 }
 
 /* =========================
-   Cartoes e botoes
-   ========================= */
-
-.card {
-  width: 90%;
-  max-width: 460px;
-  padding: 40px 50px;
-  text-align: center;
-  background: #fff9fc;
-  border: 3px solid #ffaad4;
-  border-radius: 28px;
-  box-shadow: 0 8px 40px #f0b0d080;
-}
-
-.btn {
-  padding: 14px 48px;
-  font-family: 'Pacifico';
-  font-size: 20px;
-  color: #fff;
-  background: linear-gradient(135deg, #ff79b8, #e0428f);
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 6px 20px #e0428f60;
-  transition: transform 0.15s;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-}
-
-/* =========================
    Tela inicial
    ========================= */
 
-.previews {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 18px 0;
+.start-screen {
+  min-height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+  background: #f7c5dc;
 }
 
-.previews img {
-  width: 110px;
-  height: 145px;
-  object-fit: cover;
-  border: 3px solid #ffaad4;
-  border-radius: 14px;
+.start-frame {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background-image: url('../img/tela-inicial.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Botao abaixo da frase e acima da linha inferior da imagem inicial */
+.glass-btn,
+.start-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Pacifico';
+  line-height: 0.9;
+  color: #fff;
+  text-shadow: 0 2px 8px #bf4f8c;
+  background:
+    linear-gradient(135deg, #ffffff80, transparent 35%),
+    linear-gradient(135deg, #ff9ccc80, #e85b9f55);
+  border: 3px solid #ffffff90;
+  box-shadow:
+    inset 0 2px 8px #ffffffcc,
+    inset 0 -8px 20px #d64d9160,
+    0 12px 30px #ad4f8b55;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glass-btn:hover,
+.start-btn:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 2px 10px #fff,
+    inset 0 -8px 20px #d64d9170,
+    0 16px 36px #ad4f8b70;
+}
+
+.start-btn {
+  position: absolute;
+  top: 78%;
+  left: 30%;
+  width: 16.5%;
+  min-width: 170px;
+  height: 9.5%;
+  min-height: 68px;
+  padding: 0 18px 14px;
+  font-size: clamp(24px, 2.6vw, 42px);
+  border-radius: 38px;
+}
+
+@media (max-width: 700px) {
+  .start-btn {
+    top: 75%;
+    left: 50%;
+    width: 42%;
+    min-width: 140px;
+    height: 8%;
+    min-height: 58px;
+    padding-bottom: 12px;
+    font-size: clamp(20px, 7vw, 32px);
+    transform: translateX(-50%);
+  }
+
+  .start-btn:hover {
+    transform: translateX(-50%) translateY(-4px);
+  }
 }
 
 /* =========================
@@ -115,6 +149,7 @@ h2 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
+  max-width: 100%;
 }
 
 .wrap {
@@ -124,6 +159,11 @@ h2 {
   border: 3px solid #ffaad4;
   border-radius: 16px;
   box-shadow: 0 4px 20px #e0428f30;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
 }
 
 /* Etiqueta "Imagem 1" e "Imagem 2" */
@@ -198,8 +238,46 @@ h2 {
    Tela de resultado
    ========================= */
 
+.result-screen {
+  min-height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+  background: #f8c1dd;
+}
+
+.result-frame {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background-image: url('../img/tela-final.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Conteudo colocado dentro do espaco reservado da tela final */
+.result-panel {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  width: 38%;
+  min-width: 420px;
+  height: 61%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.result-title {
+  font-size: clamp(28px, 4vw, 54px);
+  text-shadow: 3px 3px 0 #ffd0e8;
+}
+
 .stars {
-  font-size: 32px;
+  font-size: clamp(24px, 3vw, 40px);
   letter-spacing: 4px;
 }
 
@@ -214,9 +292,10 @@ h2 {
 .stat {
   min-width: 120px;
   padding: 14px 22px;
-  background: #f3efff;
-  border: 2.5px solid #d8ccff;
+  background: #fff7fccc;
+  border: 2.5px solid #ffaad4;
   border-radius: 16px;
+  box-shadow: 0 8px 22px #e0428f20;
 }
 
 .stat b {
@@ -230,4 +309,34 @@ h2 {
   font-size: 12px;
   font-weight: 700;
   color: #9b5c82;
+}
+
+.result-btn {
+  margin-top: 6px;
+  min-width: 230px;
+  min-height: 62px;
+  padding: 0 28px 12px;
+  font-size: clamp(22px, 2.2vw, 34px);
+  border-radius: 38px;
+}
+
+@media (max-width: 850px) {
+  .result-panel {
+    top: 18%;
+    left: 50%;
+    width: 72%;
+    min-width: 0;
+    height: 62%;
+    transform: translateX(-50%);
+    gap: 12px;
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .stat {
+    padding: 10px 14px;
+    min-width: 110px;
+  }
 }
