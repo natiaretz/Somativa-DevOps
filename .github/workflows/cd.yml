@@ -18,8 +18,9 @@ jobs:
           name: projetozipado.zip
           path: |
             index.html
-            css/**
+            style/**
             js/**
+            img/**
             README.md
 
   deploy:
