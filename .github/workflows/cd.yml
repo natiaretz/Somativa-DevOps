@@ -1,0 +1,23 @@
+name: Continuous Delivery Workflow
+
+on:
+  push:
+    branches: [ "main" ] # ou qualquer outra branch
+
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v5
+
+      - name: Simulando Continuous Delivery
+        uses: actions/upload-artifact@v4
+        with:
+          name: Projeto .zip
+          path: |
+            index.html
+            css/**
+            js/**
+            README.md
