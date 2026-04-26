@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   push:
     branches: [ "main" ]
+
 permissions:
   contents: read
 
@@ -59,13 +60,15 @@ jobs:
         run: ls -R
 
   discord:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Enviar alerta para o Discord
-      run: |
-        curl -H "Content-Type: application/json" \
-        -X POST \
-        -d "{\"content\":\" Novo commit enviado para a branch main no repositório ${{ github.repository }} por ${{ github.actor }}\"}" \
-        ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Enviar alerta para o Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d '{"content":"Novo commit enviado para a branch main no repositório ${{ github.repository }} por ${{ github.actor }}"}' \
+            "${{ secrets.DISCORD_WEBHOOK }}"
