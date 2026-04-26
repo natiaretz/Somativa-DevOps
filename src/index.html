@@ -6,20 +6,20 @@
   <title>Jogo dos 5 Erros</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="/style/style.css">
 
-  <!-- Ícone da aba -->
-  <link rel="icon" href="img/icon.png">
+  <!-- Icone exibido na aba do navegador. -->
+  <link rel="icon" href="/img/icon.png">
 </head>
 <body>
-  <!-- TELA 1: INICIO -->
+  <!-- Tela inicial com uma unica acao principal para comecar o jogo. -->
   <div class="screen start-screen on" id="s1">
     <div class="start-frame">
       <button class="start-btn" onclick="startGame()">jogar</button>
     </div>
   </div>
 
-  <!-- TELA 2: JOGO -->
+  <!-- Tela principal com imagens, progresso visual e tempo restante. -->
   <div class="screen game-screen" id="s2">
     <h2>Encontre os 5 erros entre as imagens</h2>
     <div class="dots" id="dots"></div>
@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <!-- TELA 3: RESULTADO -->
+  <!-- Tela final com resumo da rodada e opcao de recomecar. -->
   <div class="screen result-screen" id="s3">
     <div class="result-frame">
       <div class="result-panel">
@@ -66,6 +66,7 @@
     </div>
   </div>
 
-  <script src="js/javascript.js"></script>
+  <!-- Script no fim do body para nao bloquear a renderizacao inicial. -->
+  <script src="/js/javascript.js"></script>
 </body>
 </html>
