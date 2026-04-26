@@ -78,7 +78,6 @@ h2 {
   background-repeat: no-repeat;
 }
 
-/* Botao abaixo da frase e acima da linha inferior da imagem inicial */
 .glass-btn,
 .start-btn {
   display: flex;
@@ -272,7 +271,6 @@ canvas {
   background-repeat: no-repeat;
 }
 
-/* Conteudo colocado dentro do espaco reservado da tela final */
 .result-panel {
   position: absolute;
   top: 22%;
@@ -338,6 +336,7 @@ canvas {
 }
 
 @media (max-width: 850px) {
+  /* Ajustes dedicados a mobile para preservar leitura e espacamento na tela final. */
   .result-panel {
     top: 18%;
     left: 50%;

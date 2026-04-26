@@ -1,8 +1,8 @@
 const SECS = 60;
 const HIT = 42;
 
-// Coordenadas das 5 diferencas na imagem original.
-// x e y indicam o centro da diferenca, r indica o tamanho da area clicavel.
+// Fonte unica das diferencas do jogo.
+// x e y indicam o centro do erro na imagem original; r define o raio clicavel.
 const points = [
   { x: 261, y: 132, r: 58 },
   { x: 632, y: 134, r: 50 },
@@ -14,7 +14,8 @@ const points = [
 const img1 = new Image();
 const img2 = new Image();
 
-// Variaveis que guardam o estado atual do jogo.
+// Estado compartilhado da rodada atual.
+// Manter esse bloco centralizado facilita entender o ciclo do jogo.
 let loaded = 0;
 let scale = 1;
 let found = 0;
@@ -23,19 +24,19 @@ let timer = null;
 let playing = false;
 let errors = [];
 
-img1.src = 'img/Anime_Girl_1.jpg';
-img2.src = 'img/Anime_Girl_2.jpg';
+img1.src = '/img/Anime_Girl_1.jpg';
+img2.src = '/img/Anime_Girl_2.jpg';
 img1.onload = img2.onload = () => loaded++;
 
-// Mostra apenas a tela escolhida e esconde as outras.
+// Troca de tela em um unico ponto para evitar regras de exibicao duplicadas.
 function go(id) {
   document.querySelectorAll('.screen').forEach((screen) => screen.classList.remove('on'));
   document.getElementById(id).classList.add('on');
 }
 
-// Reinicia os dados do jogo, desenha as imagens e liga o timer.
+// Prepara uma nova partida limpando estado visual e logico.
 function startGame() {
-  // Espera as imagens carregarem antes de usar largura e altura delas.
+  // So calcula escala depois que as imagens tiverem dimensoes reais.
   if (loaded < 2) {
     setTimeout(startGame, 100);
     return;
@@ -46,14 +47,15 @@ function startGame() {
   playing = true;
   go('s2');
 
-  // Cria as bolinhas que mostram quantas diferencas ja foram encontradas.
+  // Recria os indicadores a cada partida para evitar estado residual.
   document.getElementById('dots').innerHTML = points
     .map((_, index) => `<div class="dot" id="d${index}"></div>`)
     .join('');
 
   drawImages();
 
-  // Converte as coordenadas originais para o tamanho em que a imagem aparece.
+  // Ajusta os pontos originais para o tamanho atual do canvas.
+  // O raio minimo melhora a jogabilidade em telas pequenas.
   errors = points.map((point) => ({
     x: point.x * scale,
     y: point.y * scale,
@@ -66,7 +68,7 @@ function startGame() {
   startTimer();
 }
 
-// Ajusta o tamanho dos canvases e desenha as duas imagens.
+// Mantem os canvases responsivos sem distorcer a proporcao das imagens.
 function drawImages() {
   const sideBySide = window.innerWidth >= 760;
   const maxW = sideBySide
@@ -78,6 +80,7 @@ function drawImages() {
   const w = img1.naturalWidth;
   const h = img1.naturalHeight;
 
+  // Nunca amplia a imagem acima do tamanho natural para preservar nitidez.
   scale = Math.min(maxW / w, Math.max(maxH, 180) / h, 1);
 
   [
@@ -93,7 +96,7 @@ function drawImages() {
   });
 }
 
-// Verifica se o clique do jogador acertou alguma diferenca.
+// Converte o clique da tela para coordenadas reais do canvas antes da comparacao.
 function checkClick(event) {
   if (!playing) return;
 
@@ -102,7 +105,7 @@ function checkClick(event) {
   const mouseX = (event.clientX - rect.left) * (canvas.width / rect.width);
   const mouseY = (event.clientY - rect.top) * (canvas.height / rect.height);
 
-  // Math.hypot calcula a distancia entre o clique e o centro de cada erro.
+  // Ignora erros ja encontrados para impedir contagem duplicada.
   const error = errors.find((item) => {
     return !item.found && Math.hypot(mouseX - item.x, mouseY - item.y) <= item.r;
   });
@@ -117,7 +120,7 @@ function checkClick(event) {
   if (found === points.length) finishGame();
 }
 
-// Redesenha as imagens e coloca circulos nos erros encontrados.
+
 function drawMarks() {
   drawImages();
 
@@ -128,7 +131,7 @@ function drawMarks() {
       const ctx = document.getElementById(id).getContext('2d');
       const labelY = Math.max(14, error.y - error.r - 10);
 
-      // Circulo rosa ao redor da diferenca.
+      // save/restore evita que estilos vazem para os proximos desenhos.
       ctx.save();
       ctx.strokeStyle = '#ff37b2';
       ctx.lineWidth = 3;
@@ -138,7 +141,7 @@ function drawMarks() {
       ctx.arc(error.x, error.y, error.r, 0, Math.PI * 2);
       ctx.stroke();
 
-      // Bolinha rosa com o numero do acerto.
+      // O marcador numerado reforca o feedback visual do acerto.
       ctx.shadowBlur = 0;
       ctx.fillStyle = '#bf2a68';
       ctx.beginPath();
@@ -155,7 +158,7 @@ function drawMarks() {
   });
 }
 
-// Inicia a contagem regressiva de 60 segundos.
+// Sempre limpa o intervalo anterior antes de iniciar outro timer.
 function startTimer() {
   clearInterval(timer);
   document.getElementById('bar').style.width = '100%';
@@ -167,28 +170,28 @@ function startTimer() {
     updateTimer();
     document.getElementById('bar').style.width = (timeLeft / SECS * 100) + '%';
 
-    // Nos ultimos 15 segundos, a barra fica vermelha.
+    // Feedback visual de urgencia nos segundos finais.
     document.getElementById('bar').classList.toggle('red', timeLeft <= 15);
 
     if (timeLeft <= 0) finishGame();
   }, 1000);
 }
 
-// Atualiza o texto do timer no formato minuto:segundo.
+// Mantem a regra de formatacao do tempo em um unico lugar.
 function updateTimer() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = String(timeLeft % 60).padStart(2, '0');
   document.getElementById('tNum').textContent = minutes + ':' + seconds;
 }
 
-// Para o jogo e chama a tela de resultado.
+// Encerra a interacao e agenda a tela final com um pequeno atraso visual.
 function finishGame() {
   playing = false;
   clearInterval(timer);
   setTimeout(showResult, 500);
 }
 
-// Preenche a tela final com estrelas, mensagem, acertos e tempo restante.
+// Deriva a pontuacao final a partir do estado atual da rodada.
 function showResult() {
   const stars = found === points.length && timeLeft >= 20 ? 5 : found === points.length ? 4 : found;
   const titles = ['N\u00e3o foi dessa vez...', 'Continue tentando!', 'Bom esfor\u00e7o!', 'Muito bem!', '\u00d3timo!', 'Parabéns!'];
@@ -200,7 +203,7 @@ function showResult() {
   go('s3');
 }
 
-// Volta para a tela inicial.
+// Garante limpeza minima antes de voltar para a tela inicial.
 function goStart() {
   playing = false;
   clearInterval(timer);
