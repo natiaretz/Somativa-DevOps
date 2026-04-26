@@ -61,6 +61,7 @@ jobs:
 
   discord:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     needs: build
     steps:
       - name: Discord Commits
